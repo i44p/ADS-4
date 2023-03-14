@@ -24,4 +24,29 @@ int countPairs2(int *arr, int len, int value) {
   return count;
 }
 
-int countPairs3(int *arr, int len, int value) { return 0; }
+int search_leftmost(int *arr, int value, int left, int right) {
+  if (left > right) {
+    return left;
+  }
+
+  if (arr[left] == value) return left;
+
+  int cursor = (left + right) / 2;
+
+  if (arr[cursor] < value) {
+    return search_leftmost(arr, value, cursor + 1, right);
+  }
+  return search_leftmost(arr, value, left, cursor - 1);
+}
+
+int countPairs3(int *arr, int len, int value) {
+  int count = 0;
+  for (int i = 0; i < len - 1; i++) {
+    int j = search_leftmost(arr, value - arr[i], i, len - 1);
+    while (arr[j] + arr[i] == value) {
+      j++;
+      count++;
+    }
+  }
+  return count;
+}
