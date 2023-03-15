@@ -11,7 +11,7 @@ int countPairs1(int *arr, int len, int value) {
 int countPairs2(int *arr, int len, int value) {
   int count = 0;
   for (int i = 0; i < len - 1; i++) {
-    if (i >= value) continue;
+    if (arr[i] >= value) continue;
     for (int j = i + 1; j < len; j++) {
       int s = arr[i] + arr[j];
       if (s == value) {
@@ -33,16 +33,16 @@ int search_leftmost(int *arr, int value, int left, int right) {
 
   int cursor = (left + right) / 2;
 
-  if (arr[cursor] < value) {
+  if (arr[cursor] < value)
     return search_leftmost(arr, value, cursor + 1, right);
-  }
+
   return search_leftmost(arr, value, left, cursor - 1);
 }
 
 int countPairs3(int *arr, int len, int value) {
   int count = 0;
   for (int i = 0; i < len - 1; i++) {
-    int j = search_leftmost(arr, value - arr[i], i, len - 1);
+    int j = search_leftmost(arr, value - arr[i], i + 1, len - 1);
     while (arr[j] + arr[i] == value) {
       j++;
       count++;
